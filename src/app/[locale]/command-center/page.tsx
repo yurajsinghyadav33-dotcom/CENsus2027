@@ -26,7 +26,7 @@ export default function CommandCenterPage() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -44,7 +44,7 @@ export default function CommandCenterPage() {
         </h1>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -102,7 +102,7 @@ export default function CommandCenterPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
         {/* Main 3D Map Area */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.2 }}
@@ -116,7 +116,7 @@ export default function CommandCenterPage() {
             </CardHeader>
             <CardContent className="p-0 flex-grow relative bg-[#020617]/50">
               <IndiaMap3D />
-              
+
               <div className="absolute bottom-4 left-4 bg-black/40 backdrop-blur-md rounded-lg p-3 border border-white/5">
                 <div className="text-xs font-semibold text-zinc-400 mb-2 uppercase tracking-wide">Status Legend</div>
                 <div className="space-y-2 text-xs">
@@ -130,7 +130,7 @@ export default function CommandCenterPage() {
         </motion.div>
 
         {/* Side Panel: Alerts & Network */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
