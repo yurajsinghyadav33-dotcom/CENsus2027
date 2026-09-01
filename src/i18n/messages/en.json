@@ -1,0 +1,79 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "selfEnumeration": "Self Enumeration",
+    "dashboard": "Dashboard",
+    "privacy": "Privacy & Myths"
+  },
+  "Index": {
+    "title": "Bharat Census 2027 Sahayak",
+    "phase1Title": "Phase 1: Houselisting",
+    "phase1Desc": "1 April 2026 to September 2026",
+    "phase2Title": "Phase 2: Population Enumeration",
+    "phase2Desc": "February 2027 (Reference Date: 1 March 2027)",
+    "scheduleTitle": "State-wise Schedule",
+    "scheduleDesc": "Below is the state-wise schedule for self-enumeration and survey dates. All dates are currently placeholders until officially published."
+  },
+  "phases": {
+    "title1": "Phase 1: House Listing and Housing Census",
+    "date1": "April 1, 2026 to September 2026",
+    "desc1": "In this phase, data of all buildings, houses and amenities available in them will be collected. Based on this, the housing condition in India will be assessed.",
+    "key_details1": "Key Details to be Collected:",
+    "list1_1": "Condition and use of house",
+    "list1_2": "Main source of drinking water",
+    "list1_3": "Type of toilet facility",
+    "list1_4": "Availability of electricity and internet",
+    "list1_5": "Means of transport (vehicles)",
+    "title2": "Phase 2: Population Enumeration",
+    "date2": "February 9 to February 28, 2027 (Reference Date: March 1, 2027)",
+    "desc2": "This is the main phase in which demographic, social and economic information of every person in the country will be obtained.",
+    "key_details2": "Key Details to be Collected:",
+    "list2_1": "Name, age and gender of person",
+    "list2_2": "Marital status and religion",
+    "list2_3": "Level of education (literacy)",
+    "list2_4": "Economic activity and occupation",
+    "list2_5": "Mother tongue and other known languages",
+    "pageTitle": "Phases of Census 2027"
+  },
+  "footer": {
+    "gov": "Government of India | Ministry of Home Affairs | Office of the Registrar General and Census Commissioner, India",
+    "demo": "Bharat Census. This is a demo application and should not be considered an official government portal."
+  },
+  "privacy": {
+    "pageTitle": "Privacy & Security",
+    "protectionTitle": "How your data is protected",
+    "protectionContent": "Your personal data is encrypted at rest and stored securely on sovereign servers. It is never shared with any third-party agencies.",
+    "legalTitle": "Legal Protections",
+    "legalContent": "All data collection strictly abides by the Census Act, 1948, and the Digital Personal Data Protection (DPDP) Act, 2023. Confidentiality breaches are strictly punishable under law.",
+    "contactTitle": "Contact / Grievance",
+    "contactContent": "If you have any concerns regarding data privacy, please reach out to the grievance officer at the Office of the Registrar General, India.",
+    "mythsTitle": "Myths vs Facts",
+    "myths": {
+      "myth1": "Myth: Aadhaar number is mandatory for Census 2027.",
+      "fact1": "Fact: No Aadhaar is asked. It is completely optional.",
+      "myth2": "Myth: Religion is detected automatically from your name.",
+      "fact2": "Fact: Religion is strictly self-declared only.",
+      "myth3": "Myth: Data is stored outside of India.",
+      "fact3": "Fact: All data is stored on sovereign servers within India.",
+      "myth4": "Myth: Census data is shared with tax authorities.",
+      "fact4": "Fact: Census data is strictly confidential and not shared with tax authorities under the Census Act 1948.",
+      "myth5": "Myth: I have to show property papers to the enumerator.",
+      "fact5": "Fact: Enumerators will never ask for property papers or financial documents."
+    }
+  },
+  "dashboard": {
+    "title": "Visualizations Dashboard",
+    "subtitle": "Real-time demographic analytics and state-wise enumeration progress, visualized.",
+    "demoDataBadge": "DEMO DATA",
+    "charts": {
+      "participationTitle": "State-wise Participation",
+      "participationDesc": "Percentage of households registered",
+      "demographicsTitle": "Demographic Breakdown",
+      "demographicsDesc": "Age group distribution",
+      "trendTitle": "Historical Census Trend",
+      "trendDesc": "Population growth over decades",
+      "progressTitle": "Phase-wise Progress",
+      "progressDesc": "Completion rate of current phases"
+    }
+  }
+}

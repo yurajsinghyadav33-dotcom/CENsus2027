@@ -1,0 +1,140 @@
+"use client";
+
+import { useState } from 'react';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import stateSchedule from '@/data/state-schedule.json';
+
+const INDIA_TOPO_JSON = "https://raw.githubusercontent.com/udit-001/india-maps-data/master/topojson/india/states.json";
+
+export default function SchedulePage() {
+  const [selectedState, setSelectedState] = useState<string>('');
+  const [hoveredState, setHoveredState] = useState<string>('');
+
+  const activeState = hoveredState || selectedState;
+
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <h1 className="text-3xl font-bold mb-6 text-primary">State-wise Schedule</h1>
+      
+      <div className="mb-8 max-w-md">
+        <Select onValueChange={setSelectedState} value={selectedState}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select a State / UT" />
+          </SelectTrigger>
+          <SelectContent>
+            {stateSchedule.map((s) => (
+              <SelectItem key={s.state} value={s.state}>
+                {s.state}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="space-y-6 transition-all">
+          <Card className={`border-2 ${activeState ? 'border-primary shadow-lg' : 'border-border'}`}>
+            <CardHeader>
+              <CardTitle>Phase 1: Houselisting</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <Badge variant="outline" className="bg-orange-100 text-orange-800 hover:bg-orange-100">
+                  Self-enumeration window
+                </Badge>
+                <Badge variant="outline" className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+                  Enumerator visit dates
+                </Badge>
+              </div>
+              <p className="text-muted-foreground font-medium">
+                {activeState 
+                  ? stateSchedule.find(s => s.state === activeState)?.dates 
+                  : "Select a state to view schedule"}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className={`border-2 ${activeState ? 'border-primary shadow-lg' : 'border-border'}`}>
+            <CardHeader>
+              <CardTitle>Phase 2: Population Enumeration</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <Badge variant="outline" className="bg-orange-100 text-orange-800 hover:bg-orange-100">
+                  Self-enumeration window
+                </Badge>
+                <Badge variant="outline" className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+                  Enumerator visit dates
+                </Badge>
+              </div>
+              <p className="text-muted-foreground font-medium">
+                {activeState 
+                  ? stateSchedule.find(s => s.state === activeState)?.dates 
+                  : "Select a state to view schedule"}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="bg-muted/10 rounded-xl p-4 border flex items-center justify-center min-h-[400px]">
+          <ComposableMap
+            projection="geoMercator"
+            projectionConfig={{
+              scale: 1000,
+              center: [80, 22] // rough center of India
+            }}
+            className="w-full h-full max-h-[500px]"
+          >
+            <Geographies geography={INDIA_TOPO_JSON}>
+              {({ geographies }) =>
+                geographies.map((geo) => {
+                  // Properties in udit-001 topojson typically have st_nm
+                  const stateName = geo.properties.st_nm;
+                  const isHovered = hoveredState === stateName;
+                  const isSelected = selectedState === stateName;
+                  const isActive = isHovered || isSelected;
+
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      onMouseEnter={() => setHoveredState(stateName)}
+                      onMouseLeave={() => setHoveredState('')}
+                      onClick={() => setSelectedState(stateName)}
+                      style={{
+                        default: {
+                          fill: isActive ? "#f97316" : "#e5e7eb", // orange-500 or gray-200
+                          stroke: "#9ca3af",
+                          strokeWidth: 0.5,
+                          outline: "none",
+                        },
+                        hover: {
+                          fill: "#f97316",
+                          stroke: "#9ca3af",
+                          strokeWidth: 1,
+                          outline: "none",
+                          cursor: "pointer"
+                        },
+                        pressed: {
+                          fill: "#ea580c", // orange-600
+                          outline: "none",
+                        },
+                      }}
+                    />
+                  );
+                })
+              }
+            </Geographies>
+          </ComposableMap>
+        </div>
+      </div>
+
+      <div className="mt-12 text-sm text-muted-foreground text-center">
+        <p>Dates as per pib.gov.in / india.gov.in. State-wise schedule to be officially announced by RG&CCI.</p>
+      </div>
+    </div>
+  );
+}

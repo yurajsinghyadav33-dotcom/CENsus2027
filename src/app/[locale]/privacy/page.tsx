@@ -1,0 +1,146 @@
+// @ts-nocheck
+"use client";
+
+import React from 'react';
+import { useTranslations } from 'next-intl';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ShieldCheck, Scale, PhoneCall, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+export default function PrivacyPage() {
+  const t = useTranslations('privacy');
+
+  const mythsList = [
+    { myth: t('myths.myth1'), fact: t('myths.fact1') },
+    { myth: t('myths.myth2'), fact: t('myths.fact2') },
+    { myth: t('myths.myth3'), fact: t('myths.fact3') },
+    { myth: t('myths.myth4'), fact: t('myths.fact4') },
+    { myth: t('myths.myth5'), fact: t('myths.fact5') },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } }
+  };
+
+  return (
+    <div className="container mx-auto max-w-5xl py-24 px-4 md:px-6 relative min-h-screen">
+      {/* Glow Effects */}
+      <div className="absolute top-[10%] right-[10%] w-[30%] h-[30%] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[20%] left-[10%] w-[30%] h-[30%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center space-y-4 mb-16 relative z-10"
+      >
+        <div className="inline-flex items-center space-x-2 glass-panel px-4 py-2 rounded-full w-fit mb-4">
+          <ShieldCheck className="w-4 h-4 text-green-400" />
+          <span className="text-sm font-medium tracking-wide">Enterprise Grade Security</span>
+        </div>
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight glow-text">{t('pageTitle')}</h1>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          We are committed to maintaining the highest standards of data security and confidentiality.
+        </p>
+      </motion.div>
+
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid gap-6 md:grid-cols-3 relative z-10"
+      >
+        <motion.div variants={itemVariants}>
+          <Card className="glass-panel border-white/5 border-t-4 border-t-blue-500 h-full hover:-translate-y-2 transition-transform duration-300">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <ShieldCheck className="h-6 w-6 text-blue-500" />
+                {t('protectionTitle')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-zinc-400 leading-relaxed">
+                {t('protectionContent')}
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <Card className="glass-panel border-white/5 border-t-4 border-t-green-500 h-full hover:-translate-y-2 transition-transform duration-300">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <Scale className="h-6 w-6 text-green-500" />
+                {t('legalTitle')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-zinc-400 leading-relaxed">
+                {t('legalContent')}
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <Card className="glass-panel border-white/5 border-t-4 border-t-purple-500 h-full hover:-translate-y-2 transition-transform duration-300">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <PhoneCall className="h-6 w-6 text-purple-500" />
+                {t('contactTitle')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-zinc-400 leading-relaxed">
+                {t('contactContent')}
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </motion.div>
+
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="mt-20 relative z-10"
+      >
+        <div className="flex flex-col items-center mb-8">
+          <h2 className="text-3xl font-bold text-center glow-text">{t('mythsTitle')}</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mt-4 rounded-full"></div>
+        </div>
+        
+        <Card className="glass-panel border-white/5 max-w-3xl mx-auto">
+          <CardContent className="pt-6">
+            <Accordion className="w-full">
+              {mythsList.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-b border-white/5">
+                  <AccordionTrigger className="text-left font-medium text-lg hover:text-white text-zinc-300 transition-colors py-4">
+                    <span className="flex items-center">
+                      <Sparkles className="w-4 h-4 text-purple-400 mr-3" />
+                      {item.myth}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base text-zinc-400 bg-white/5 p-4 rounded-xl mt-2 border-l-2 border-green-500 backdrop-blur-md">
+                    {item.fact}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </div>
+  );
+}

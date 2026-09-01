@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  name      String?
+  role      String   @default("CITIZEN") // CITIZEN, ENUMERATOR, SUPERVISOR, ADMIN
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  households Household[]
+  assignments Assignment[]
+}
+
+model Household {
+  id              String   @id @default(cuid())
+  headName        String
+  address         String
+  state           String?  // New field for state tracking (UP, Bihar, etc.)
+  district        String?
+  memberCount     Int
+  houseOwnership  String
+  migrated        String
+  migrationReason String?
+  amenities       String   // stored as JSON string or comma-separated for SQLite
+  
+  status          String   @default("PENDING") // PENDING, VERIFIED, REJECTED
+  dataQualityFlags String? // Warnings from AI validation
+  
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  
+  members         Member[]
+  assignments     Assignment[]
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Member {
+  id            String    @id @default(cuid())
+  name          String
+  age           Int
+  gender        String
+  maritalStatus String
+  religion      String
+  education     String
+  occupation    String
+  
+  householdId   String
+  household     Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+}
+
+model Assignment {
+  id            String    @id @default(cuid())
+  enumeratorId  String
+  enumerator    User      @relation(fields: [enumeratorId], references: [id])
+  householdId   String
+  household     Household @relation(fields: [householdId], references: [id])
+  
+  status        String    @default("ASSIGNED") // ASSIGNED, COMPLETED, REVISIT
+  notes         String?
+  scheduledDate DateTime?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model SyncLog {
+  id            String    @id @default(cuid())
+  deviceId      String
+  recordType    String    // HOUSEHOLD, MEMBER
+  recordId      String
+  syncStatus    String    @default("PENDING") // PENDING, SYNCED, FAILED
+  payload       String    // JSON backup of the offline data
+  errorMessage  String?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}

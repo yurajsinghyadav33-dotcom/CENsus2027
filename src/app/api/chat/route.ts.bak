@@ -1,0 +1,20 @@
+import { generateChatReply } from "@/lib/genai";
+
+export async function POST(req: Request) {
+  try {
+    const { messages, locale } = await req.json();
+
+    const stream = await generateChatReply(messages, locale || 'en');
+
+    // Return the stream as text/plain as it was working correctly with the UI
+    return new Response(stream.toReadableStream(), {
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
+  } catch (error) {
+    console.error('Chat error:', error);
+    return new Response(JSON.stringify({ error: 'Failed to process chat' }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}
